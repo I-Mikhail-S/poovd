@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            VScrollBar = new VScrollBar();
+            VScrollBar_Main = new VScrollBar();
             RadioButton_Shift0 = new RadioButton();
             RadioButton_Shift1 = new RadioButton();
             groupBox1 = new GroupBox();
@@ -37,45 +37,45 @@
             TextBox_TopRow = new TextBox();
             groupBox4 = new GroupBox();
             TextBox_ScrollStep = new TextBox();
-            PictureBox = new PictureBox();
+            PictureBox_Main = new PictureBox();
             TextBox_XCoord = new TextBox();
             label1 = new Label();
             label2 = new Label();
             TextBox_YCoord = new TextBox();
             label3 = new Label();
             TextBox_Luminance = new TextBox();
-            TextBox_Path = new TextBox();
             groupBox3 = new GroupBox();
-            TextBox_ImageSizeHeight = new TextBox();
-            groupBox_imageSize = new GroupBox();
-            label_imageSizeWidth = new Label();
-            label_ImageSizeHeigth = new Label();
-            TextBox_ImageSizeWidth = new TextBox();
+            CheckBox_TestVersion = new CheckBox();
+            Label_FileName = new Label();
+            Button_SetPath = new Button();
+            TextBox_ImageSize = new TextBox();
+            label4 = new Label();
+            groupBox5 = new GroupBox();
+            TextBox_CacheRowsCount = new TextBox();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)PictureBox).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)PictureBox_Main).BeginInit();
             groupBox3.SuspendLayout();
-            groupBox_imageSize.SuspendLayout();
+            groupBox5.SuspendLayout();
             SuspendLayout();
             // 
-            // VScrollBar
+            // VScrollBar_Main
             // 
-            VScrollBar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
-            VScrollBar.Location = new Point(724, 56);
-            VScrollBar.Maximum = 5000;
-            VScrollBar.Name = "VScrollBar";
-            VScrollBar.Size = new Size(31, 348);
-            VScrollBar.TabIndex = 1;
-            VScrollBar.Scroll += VScrollBar_Scroll;
+            VScrollBar_Main.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Right;
+            VScrollBar_Main.Location = new Point(960, 75);
+            VScrollBar_Main.Maximum = 1000;
+            VScrollBar_Main.Name = "VScrollBar_Main";
+            VScrollBar_Main.Size = new Size(31, 464);
+            VScrollBar_Main.TabIndex = 1;
+            VScrollBar_Main.Scroll += VScrollBar_Scroll;
             // 
             // RadioButton_Shift0
             // 
             RadioButton_Shift0.AutoSize = true;
-            RadioButton_Shift0.Location = new Point(14, 20);
-            RadioButton_Shift0.Margin = new Padding(3, 2, 3, 2);
+            RadioButton_Shift0.Location = new Point(16, 27);
             RadioButton_Shift0.Name = "RadioButton_Shift0";
-            RadioButton_Shift0.Size = new Size(31, 19);
+            RadioButton_Shift0.Size = new Size(38, 24);
             RadioButton_Shift0.TabIndex = 2;
             RadioButton_Shift0.TabStop = true;
             RadioButton_Shift0.Text = "0";
@@ -85,10 +85,9 @@
             // RadioButton_Shift1
             // 
             RadioButton_Shift1.AutoSize = true;
-            RadioButton_Shift1.Location = new Point(52, 20);
-            RadioButton_Shift1.Margin = new Padding(3, 2, 3, 2);
+            RadioButton_Shift1.Location = new Point(59, 27);
             RadioButton_Shift1.Name = "RadioButton_Shift1";
-            RadioButton_Shift1.Size = new Size(31, 19);
+            RadioButton_Shift1.Size = new Size(38, 24);
             RadioButton_Shift1.TabIndex = 3;
             RadioButton_Shift1.TabStop = true;
             RadioButton_Shift1.Text = "1";
@@ -100,11 +99,9 @@
             groupBox1.Controls.Add(RadioButton_Shift2);
             groupBox1.Controls.Add(RadioButton_Shift1);
             groupBox1.Controls.Add(RadioButton_Shift0);
-            groupBox1.Location = new Point(289, 9);
-            groupBox1.Margin = new Padding(3, 2, 3, 2);
+            groupBox1.Location = new Point(288, 12);
             groupBox1.Name = "groupBox1";
-            groupBox1.Padding = new Padding(3, 2, 3, 2);
-            groupBox1.Size = new Size(135, 45);
+            groupBox1.Size = new Size(154, 60);
             groupBox1.TabIndex = 4;
             groupBox1.TabStop = false;
             groupBox1.Text = "Сдвигать коды на:";
@@ -112,10 +109,9 @@
             // RadioButton_Shift2
             // 
             RadioButton_Shift2.AutoSize = true;
-            RadioButton_Shift2.Location = new Point(91, 20);
-            RadioButton_Shift2.Margin = new Padding(3, 2, 3, 2);
+            RadioButton_Shift2.Location = new Point(104, 27);
             RadioButton_Shift2.Name = "RadioButton_Shift2";
-            RadioButton_Shift2.Size = new Size(31, 19);
+            RadioButton_Shift2.Size = new Size(38, 24);
             RadioButton_Shift2.TabIndex = 4;
             RadioButton_Shift2.TabStop = true;
             RadioButton_Shift2.Text = "2";
@@ -125,22 +121,19 @@
             // groupBox2
             // 
             groupBox2.Controls.Add(TextBox_TopRow);
-            groupBox2.Location = new Point(429, 9);
-            groupBox2.Margin = new Padding(3, 2, 3, 2);
+            groupBox2.Location = new Point(448, 12);
             groupBox2.Name = "groupBox2";
-            groupBox2.Padding = new Padding(3, 2, 3, 2);
-            groupBox2.Size = new Size(204, 45);
+            groupBox2.Size = new Size(233, 60);
             groupBox2.TabIndex = 5;
             groupBox2.TabStop = false;
             groupBox2.Text = "Верхняя строка изображения";
             // 
             // TextBox_TopRow
             // 
-            TextBox_TopRow.Location = new Point(46, 17);
-            TextBox_TopRow.Margin = new Padding(3, 2, 3, 2);
+            TextBox_TopRow.Location = new Point(53, 23);
             TextBox_TopRow.MaxLength = 4;
             TextBox_TopRow.Name = "TextBox_TopRow";
-            TextBox_TopRow.Size = new Size(100, 23);
+            TextBox_TopRow.Size = new Size(114, 27);
             TextBox_TopRow.TabIndex = 0;
             TextBox_TopRow.Text = "0";
             TextBox_TopRow.KeyDown += TextBox_TopRow_KeyDown;
@@ -150,54 +143,49 @@
             // 
             groupBox4.Anchor = AnchorStyles.Top | AnchorStyles.Right;
             groupBox4.Controls.Add(TextBox_ScrollStep);
-            groupBox4.Location = new Point(639, 9);
-            groupBox4.Margin = new Padding(3, 2, 3, 2);
+            groupBox4.Location = new Point(862, 12);
             groupBox4.Name = "groupBox4";
-            groupBox4.Padding = new Padding(3, 2, 3, 2);
-            groupBox4.Size = new Size(113, 45);
+            groupBox4.Size = new Size(129, 60);
             groupBox4.TabIndex = 6;
             groupBox4.TabStop = false;
             groupBox4.Text = "Шаг прокрутки";
             // 
             // TextBox_ScrollStep
             // 
-            TextBox_ScrollStep.Location = new Point(26, 17);
-            TextBox_ScrollStep.Margin = new Padding(3, 2, 3, 2);
+            TextBox_ScrollStep.Location = new Point(30, 23);
             TextBox_ScrollStep.Name = "TextBox_ScrollStep";
-            TextBox_ScrollStep.Size = new Size(69, 23);
+            TextBox_ScrollStep.Size = new Size(78, 27);
             TextBox_ScrollStep.TabIndex = 0;
             TextBox_ScrollStep.Text = "1";
             TextBox_ScrollStep.KeyDown += TextBox_ScrollStep_KeyDown;
             TextBox_ScrollStep.KeyPress += TextBox_OnlyNumbersInput;
             // 
-            // PictureBox
+            // PictureBox_Main
             // 
-            PictureBox.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            PictureBox.Location = new Point(10, 56);
-            PictureBox.Margin = new Padding(3, 2, 3, 2);
-            PictureBox.Name = "PictureBox";
-            PictureBox.Size = new Size(474, 348);
-            PictureBox.TabIndex = 7;
-            PictureBox.TabStop = false;
-            PictureBox.MouseMove += PictureBox_MouseMove;
+            PictureBox_Main.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            PictureBox_Main.Location = new Point(11, 75);
+            PictureBox_Main.Name = "PictureBox_Main";
+            PictureBox_Main.Size = new Size(580, 464);
+            PictureBox_Main.TabIndex = 7;
+            PictureBox_Main.TabStop = false;
+            PictureBox_Main.MouseMove += PictureBox_MouseMove;
             // 
             // TextBox_XCoord
             // 
             TextBox_XCoord.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            TextBox_XCoord.Location = new Point(68, 410);
-            TextBox_XCoord.Margin = new Padding(3, 2, 3, 2);
+            TextBox_XCoord.Location = new Point(78, 547);
             TextBox_XCoord.Name = "TextBox_XCoord";
             TextBox_XCoord.ReadOnly = true;
-            TextBox_XCoord.Size = new Size(64, 23);
+            TextBox_XCoord.Size = new Size(73, 27);
             TextBox_XCoord.TabIndex = 8;
             // 
             // label1
             // 
             label1.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label1.AutoSize = true;
-            label1.Location = new Point(35, 412);
+            label1.Location = new Point(40, 549);
             label1.Name = "label1";
-            label1.Size = new Size(25, 15);
+            label1.Size = new Size(32, 20);
             label1.TabIndex = 9;
             label1.Text = "X =";
             // 
@@ -205,152 +193,166 @@
             // 
             label2.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label2.AutoSize = true;
-            label2.Location = new Point(156, 412);
+            label2.Location = new Point(178, 549);
             label2.Name = "label2";
-            label2.Size = new Size(25, 15);
+            label2.Size = new Size(31, 20);
             label2.TabIndex = 11;
             label2.Text = "Y =";
             // 
             // TextBox_YCoord
             // 
             TextBox_YCoord.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            TextBox_YCoord.Location = new Point(189, 410);
-            TextBox_YCoord.Margin = new Padding(3, 2, 3, 2);
+            TextBox_YCoord.Location = new Point(216, 547);
             TextBox_YCoord.Name = "TextBox_YCoord";
             TextBox_YCoord.ReadOnly = true;
-            TextBox_YCoord.Size = new Size(64, 23);
+            TextBox_YCoord.Size = new Size(73, 27);
             TextBox_YCoord.TabIndex = 10;
             // 
             // label3
             // 
             label3.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
             label3.AutoSize = true;
-            label3.Location = new Point(262, 412);
+            label3.Location = new Point(299, 549);
             label3.Name = "label3";
-            label3.Size = new Size(54, 15);
+            label3.Size = new Size(67, 20);
             label3.TabIndex = 13;
             label3.Text = "Яркость:";
             // 
             // TextBox_Luminance
             // 
             TextBox_Luminance.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            TextBox_Luminance.Location = new Point(326, 410);
-            TextBox_Luminance.Margin = new Padding(3, 2, 3, 2);
+            TextBox_Luminance.Location = new Point(373, 547);
             TextBox_Luminance.Name = "TextBox_Luminance";
             TextBox_Luminance.ReadOnly = true;
-            TextBox_Luminance.Size = new Size(64, 23);
+            TextBox_Luminance.Size = new Size(73, 27);
             TextBox_Luminance.TabIndex = 12;
-            // 
-            // TextBox_Path
-            // 
-            TextBox_Path.Location = new Point(5, 17);
-            TextBox_Path.Margin = new Padding(3, 2, 3, 2);
-            TextBox_Path.Name = "TextBox_Path";
-            TextBox_Path.Size = new Size(263, 23);
-            TextBox_Path.TabIndex = 14;
-            TextBox_Path.KeyDown += TextBox_Path_KeyDown;
             // 
             // groupBox3
             // 
-            groupBox3.Controls.Add(TextBox_Path);
-            groupBox3.Location = new Point(10, 9);
-            groupBox3.Margin = new Padding(3, 2, 3, 2);
+            groupBox3.Controls.Add(CheckBox_TestVersion);
+            groupBox3.Controls.Add(Label_FileName);
+            groupBox3.Controls.Add(Button_SetPath);
+            groupBox3.Location = new Point(11, 12);
             groupBox3.Name = "groupBox3";
-            groupBox3.Padding = new Padding(3, 2, 3, 2);
-            groupBox3.Size = new Size(273, 45);
+            groupBox3.Size = new Size(271, 60);
             groupBox3.TabIndex = 5;
             groupBox3.TabStop = false;
             groupBox3.Text = "Загрузка mbv файла:";
             // 
-            // TextBox_ImageSizeHeight
+            // CheckBox_TestVersion
             // 
-            TextBox_ImageSizeHeight.Location = new Point(101, 22);
-            TextBox_ImageSizeHeight.Name = "TextBox_ImageSizeHeight";
-            TextBox_ImageSizeHeight.ReadOnly = true;
-            TextBox_ImageSizeHeight.Size = new Size(85, 23);
-            TextBox_ImageSizeHeight.TabIndex = 14;
+            CheckBox_TestVersion.AutoSize = true;
+            CheckBox_TestVersion.Checked = true;
+            CheckBox_TestVersion.CheckState = CheckState.Checked;
+            CheckBox_TestVersion.Location = new Point(205, 0);
+            CheckBox_TestVersion.Name = "CheckBox_TestVersion";
+            CheckBox_TestVersion.Size = new Size(55, 24);
+            CheckBox_TestVersion.TabIndex = 2;
+            CheckBox_TestVersion.Text = "test";
+            CheckBox_TestVersion.UseVisualStyleBackColor = true;
             // 
-            // groupBox_imageSize
+            // Label_FileName
             // 
-            groupBox_imageSize.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            groupBox_imageSize.Controls.Add(label_imageSizeWidth);
-            groupBox_imageSize.Controls.Add(label_ImageSizeHeigth);
-            groupBox_imageSize.Controls.Add(TextBox_ImageSizeWidth);
-            groupBox_imageSize.Controls.Add(TextBox_ImageSizeHeight);
-            groupBox_imageSize.Location = new Point(522, 331);
-            groupBox_imageSize.Name = "groupBox_imageSize";
-            groupBox_imageSize.Size = new Size(199, 102);
-            groupBox_imageSize.TabIndex = 15;
-            groupBox_imageSize.TabStop = false;
-            groupBox_imageSize.Text = "Размеры изображения";
+            Label_FileName.AutoSize = true;
+            Label_FileName.Location = new Point(125, 29);
+            Label_FileName.Name = "Label_FileName";
+            Label_FileName.Size = new Size(0, 20);
+            Label_FileName.TabIndex = 1;
             // 
-            // label_imageSizeWidth
+            // Button_SetPath
             // 
-            label_imageSizeWidth.AutoSize = true;
-            label_imageSizeWidth.Location = new Point(22, 66);
-            label_imageSizeWidth.Name = "label_imageSizeWidth";
-            label_imageSizeWidth.Size = new Size(52, 15);
-            label_imageSizeWidth.TabIndex = 17;
-            label_imageSizeWidth.Text = "Ширина";
+            Button_SetPath.Location = new Point(6, 25);
+            Button_SetPath.Name = "Button_SetPath";
+            Button_SetPath.Size = new Size(113, 29);
+            Button_SetPath.TabIndex = 0;
+            Button_SetPath.Text = "Загрузить";
+            Button_SetPath.UseVisualStyleBackColor = true;
+            Button_SetPath.Click += Button_SetPath_Click;
             // 
-            // label_ImageSizeHeigth
+            // TextBox_ImageSize
             // 
-            label_ImageSizeHeigth.AutoSize = true;
-            label_ImageSizeHeigth.Location = new Point(22, 30);
-            label_ImageSizeHeigth.Name = "label_ImageSizeHeigth";
-            label_ImageSizeHeigth.Size = new Size(47, 15);
-            label_ImageSizeHeigth.TabIndex = 16;
-            label_ImageSizeHeigth.Text = "Высота";
+            TextBox_ImageSize.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            TextBox_ImageSize.Location = new Point(643, 547);
+            TextBox_ImageSize.Margin = new Padding(3, 4, 3, 4);
+            TextBox_ImageSize.Name = "TextBox_ImageSize";
+            TextBox_ImageSize.ReadOnly = true;
+            TextBox_ImageSize.Size = new Size(249, 27);
+            TextBox_ImageSize.TabIndex = 14;
             // 
-            // TextBox_ImageSizeWidth
+            // label4
             // 
-            TextBox_ImageSizeWidth.Location = new Point(101, 66);
-            TextBox_ImageSizeWidth.Name = "TextBox_ImageSizeWidth";
-            TextBox_ImageSizeWidth.ReadOnly = true;
-            TextBox_ImageSizeWidth.Size = new Size(85, 23);
-            TextBox_ImageSizeWidth.TabIndex = 15;
+            label4.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            label4.AutoSize = true;
+            label4.Location = new Point(463, 549);
+            label4.Name = "label4";
+            label4.Size = new Size(174, 20);
+            label4.TabIndex = 16;
+            label4.Text = "Размеры изображения:";
+            // 
+            // groupBox5
+            // 
+            groupBox5.Controls.Add(TextBox_CacheRowsCount);
+            groupBox5.Location = new Point(687, 12);
+            groupBox5.Name = "groupBox5";
+            groupBox5.Size = new Size(169, 60);
+            groupBox5.TabIndex = 6;
+            groupBox5.TabStop = false;
+            groupBox5.Text = "Кол-во строк в кэше";
+            // 
+            // TextBox_CacheRowsCount
+            // 
+            TextBox_CacheRowsCount.Location = new Point(29, 23);
+            TextBox_CacheRowsCount.MaxLength = 4;
+            TextBox_CacheRowsCount.Name = "TextBox_CacheRowsCount";
+            TextBox_CacheRowsCount.Size = new Size(114, 27);
+            TextBox_CacheRowsCount.TabIndex = 0;
+            TextBox_CacheRowsCount.Text = "0";
+            TextBox_CacheRowsCount.KeyDown += TextBox_CacheRowsCount_KeyDown;
+            TextBox_CacheRowsCount.KeyPress += TextBox_OnlyNumbersInput;
             // 
             // Form1
             // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(760, 439);
-            Controls.Add(groupBox_imageSize);
+            ClientSize = new Size(1002, 585);
+            Controls.Add(groupBox5);
+            Controls.Add(label4);
             Controls.Add(groupBox3);
+            Controls.Add(TextBox_ImageSize);
             Controls.Add(label3);
             Controls.Add(TextBox_Luminance);
             Controls.Add(label2);
             Controls.Add(TextBox_YCoord);
             Controls.Add(label1);
             Controls.Add(TextBox_XCoord);
-            Controls.Add(PictureBox);
+            Controls.Add(PictureBox_Main);
             Controls.Add(groupBox4);
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
-            Controls.Add(VScrollBar);
-            Margin = new Padding(3, 2, 3, 2);
-            MinimumSize = new Size(776, 385);
+            Controls.Add(VScrollBar_Main);
+            MinimumSize = new Size(884, 498);
             Name = "Form1";
             Text = "Визуализация изображений высокого разрешения";
             ResizeEnd += Form1_ResizeEnd;
+            Resize += Form1_Resize;
             groupBox1.ResumeLayout(false);
             groupBox1.PerformLayout();
             groupBox2.ResumeLayout(false);
             groupBox2.PerformLayout();
             groupBox4.ResumeLayout(false);
             groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)PictureBox).EndInit();
+            ((System.ComponentModel.ISupportInitialize)PictureBox_Main).EndInit();
             groupBox3.ResumeLayout(false);
             groupBox3.PerformLayout();
-            groupBox_imageSize.ResumeLayout(false);
-            groupBox_imageSize.PerformLayout();
+            groupBox5.ResumeLayout(false);
+            groupBox5.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private VScrollBar VScrollBar;
+        private VScrollBar VScrollBar_Main;
         private RadioButton RadioButton_Shift0;
         private RadioButton RadioButton_Shift1;
         private GroupBox groupBox1;
@@ -359,19 +361,20 @@
         private TextBox TextBox_TopRow;
         private GroupBox groupBox4;
         private TextBox TextBox_ScrollStep;
-        private PictureBox PictureBox;
+        private PictureBox PictureBox_Main;
         private TextBox TextBox_XCoord;
         private Label label1;
         private Label label2;
         private TextBox TextBox_YCoord;
         private Label label3;
         private TextBox TextBox_Luminance;
-        private TextBox TextBox_Path;
         private GroupBox groupBox3;
-        private TextBox TextBox_ImageSizeHeight;
-        private GroupBox groupBox_imageSize;
-        private Label label_imageSizeWidth;
-        private Label label_ImageSizeHeigth;
-        private TextBox TextBox_ImageSizeWidth;
+        private TextBox TextBox_ImageSize;
+        private Label Label_FileName;
+        private Button Button_SetPath;
+        private CheckBox CheckBox_TestVersion;
+        private Label label4;
+        private GroupBox groupBox5;
+        private TextBox TextBox_CacheRowsCount;
     }
 }

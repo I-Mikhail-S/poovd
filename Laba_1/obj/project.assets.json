@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\инст\\5 семак\\Программное обеспечение обработки визуальных данных\\VisualDataProcessing\\Laba_1\\Laba_1.csproj",
+      "projectUniqueName": "C:\\инст\\5 семак\\Программное обеспечение обработки визуальных данных\\VisualDataProcessing\\Laba_1\\Laba_1.csproj",
       "projectName": "ПООВД_3_ИАИТ-119_ЛР№1_Иванчин_Гаврилов",
-      "projectPath": "D:\\инст\\5 семак\\Программное обеспечение обработки визуальных данных\\VisualDataProcessing\\Laba_1\\Laba_1.csproj",
+      "projectPath": "C:\\инст\\5 семак\\Программное обеспечение обработки визуальных данных\\VisualDataProcessing\\Laba_1\\Laba_1.csproj",
       "packagesPath": "C:\\Users\\Михаил\\.nuget\\packages\\",
-      "outputPath": "D:\\инст\\5 семак\\Программное обеспечение обработки визуальных данных\\VisualDataProcessing\\Laba_1\\obj\\",
+      "outputPath": "C:\\инст\\5 семак\\Программное обеспечение обработки визуальных данных\\VisualDataProcessing\\Laba_1\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Михаил\\AppData\\Roaming\\NuGet\\NuGet.Config",

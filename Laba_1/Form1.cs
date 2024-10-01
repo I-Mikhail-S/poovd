@@ -1,7 +1,8 @@
 using System.Text.RegularExpressions;
 
 namespace Laba_1 {
-    public partial class Form1 : Form {
+    public partial class Form1 : Form
+    {
         // Объект для построения изображения
         Bitmap bitmap;
         // Делигат отвечающий за метод обработки кнопки Enter
@@ -16,46 +17,56 @@ namespace Laba_1 {
         // Матрица изображения
         byte[,] picture;
 
-        // D:\инст\5 семак\Программное обеспечение обработки визуальных данных\лаба 1\Полосы вертикальные\BVx2500.mbv
 
-        public Form1() {
+        public Form1()
+        {
             // Первоначальная настройка
             InitializeComponent();
-            PictureBox.BackColor = Color.White;
-            bitmap = new Bitmap(PictureBox.Width, PictureBox.Height);
-            VScrollBar.LargeChange = PictureBox.Size.Height;
+            PictureBox_Main.BackColor = Color.White;
+            bitmap = new Bitmap(PictureBox_Main.Width, PictureBox_Main.Height);
+            VScrollBar_Main.LargeChange = PictureBox_Main.Size.Height;
+            UpdateCacheRowsCount();
         }
 
         /// <summary>
         /// Ввод только чисел
         /// </summary>
-        private void TextBox_OnlyNumbersInput(object sender, KeyPressEventArgs e) {
+        private void TextBox_OnlyNumbersInput(object sender, KeyPressEventArgs e)
+        {
             char number = e.KeyChar;
 
-            if (!Char.IsDigit(number)) {
+            if(!Char.IsDigit(number))
+            {
                 e.Handled = true;
             }
         }
 
         /// <summary>
-        /// Событие ввода пути к файлу
+        /// Событие кнопки указания пути к файлу
         /// </summary>
-        private void TextBox_Path_KeyDown(object sender, KeyEventArgs e) {
-            enterHendler = SetPath;
-            TextBoxKeyDownReaction(sender, e);
-        }
+        private void Button_SetPath_Click(object sender, EventArgs e)
+        {
+            using(OpenFileDialog openFileDialog = new())
+            {
+                // Расширения файла, который нам нужен
+                openFileDialog.Filter = "(*.mbv)|*.mbv";
+                // Если не открыли файл, выходим
+                if(openFileDialog.ShowDialog() != DialogResult.OK) return;
 
-        /// <summary>
-        /// Метод обработки пути к файлу
-        /// </summary>
-        private void SetPath() {
-            // Проверка валидности
-            if (Regex.IsMatch(TextBox_Path.Text, "^.*\\.mbv$") && File.Exists(TextBox_Path.Text)) {
-                // построение изображения
-                pictureReader = new(TextBox_Path.Text);
-                VScrollBar.Maximum = pictureReader.Height;
-                TextBox_ImageSizeHeight.Text = $"{pictureReader.Height}";
-                TextBox_ImageSizeWidth.Text = $"{pictureReader.Width}";
+                // Создаём объект PictureReader 
+                pictureReader = new(openFileDialog.FileName,
+                    ushort.Parse(TextBox_CacheRowsCount.Text), CheckBox_TestVersion.Checked);
+                // Обновляем ширину изображения
+                PictureBox_Main.Width = pictureReader.Width;
+                bitmap = new Bitmap(PictureBox_Main.Width, PictureBox_Main.Height);
+                // Уставанливаем макс значение равное размерам изображения и значение на 0
+                VScrollBar_Main.Maximum = pictureReader.Height - 1;
+                // Выводим название файла
+                Label_FileName.Text = openFileDialog.
+                    FileName[(openFileDialog.FileName.LastIndexOf('\\') + 1)..];
+                // Выводим инфу о изображении
+                TextBox_ImageSize.Text = $"{pictureReader.Width}Х{pictureReader.Height}";
+                // Выводим изображение на экран
                 ReadPicture();
             }
         }
@@ -63,7 +74,8 @@ namespace Laba_1 {
         /// <summary>
         /// Событие ввода Y-координаты верхней строки экрана
         /// </summary>
-        private void TextBox_TopRow_KeyDown(object sender, KeyEventArgs e) {
+        private void TextBox_TopRow_KeyDown(object sender, KeyEventArgs e)
+        {
             enterHendler = SetTopRow;
             TextBoxKeyDownReaction(sender, e);
         }
@@ -71,21 +83,50 @@ namespace Laba_1 {
         /// <summary>
         /// Метод обработки Y-координаты верхней строки экрана
         /// </summary>
-        private void SetTopRow() {
-            if (ushort.TryParse(TextBox_TopRow.Text, out ushort a)) {
-                // Если выходит за диапазон, сделать максимальным
-                topRow = (ushort)(a > VScrollBar.Maximum - VScrollBar.LargeChange ? VScrollBar.Maximum - VScrollBar.LargeChange : a);
-                VScrollBar.Value = topRow;
-                TextBox_TopRow.Text = $"{topRow}";
-                // Построить изображение
-                ReadPicture();
-            }
+        private void SetTopRow()
+        {
+            if(!ushort.TryParse(TextBox_TopRow.Text, out ushort newTopRow)) return;
+            // Если выходит за диапазон, сделать максимальным
+            topRow = (ushort)(newTopRow > VScrollBar_Main.Maximum - VScrollBar_Main.LargeChange ?
+                VScrollBar_Main.Maximum - VScrollBar_Main.LargeChange : newTopRow);
+            VScrollBar_Main.Value = topRow;
+            TextBox_TopRow.Text = $"{topRow}";
+            // Построить изображение
+            ReadPicture();
+        }
+
+        /// <summary>
+        /// Событие установки кол-ва строк сохраняемых в кэше
+        /// </summary>
+        private void TextBox_CacheRowsCount_KeyDown(object sender, KeyEventArgs e)
+        {
+            enterHendler = UpdateCacheRowsCount;
+            TextBoxKeyDownReaction(sender, e);
+        }
+
+        /// <summary>
+        /// Метод обработки кол-ва строк сохраняемых в кэше
+        /// </summary>
+        private void UpdateCacheRowsCount()
+        {
+            // Проверяем валидность данных
+            if(!ushort.TryParse(TextBox_CacheRowsCount.Text, out ushort newCount)) return;
+            // Если меньше экрана, ставимпоразмерам экрана
+            if(newCount < PictureBox_Main.Height)
+                newCount = (ushort)PictureBox_Main.Height;
+            // Если больше размеров тестовой картинки, то ставим 3000
+            if(newCount > 3000) newCount = 3000;
+            // Обновляем значение в интерфейсе
+            TextBox_CacheRowsCount.Text = $"{newCount}";
+            // Если загружено изображение, то и его кэш обновляем
+            pictureReader?.UpdateCacheRowsCount(newCount);
         }
 
         /// <summary>
         /// Событие установки шага прокрутки изображения
         /// </summary>
-        private void TextBox_ScrollStep_KeyDown(object sender, KeyEventArgs e) {
+        private void TextBox_ScrollStep_KeyDown(object sender, KeyEventArgs e)
+        {
             enterHendler = SetScrollStep;
             TextBoxKeyDownReaction(sender, e);
 
@@ -94,19 +135,23 @@ namespace Laba_1 {
         /// <summary>
         /// Метод обработки шага прокрутки изображения
         /// </summary>
-        private void SetScrollStep() { if (ushort.TryParse(TextBox_ScrollStep.Text, out ushort a)) VScrollBar.SmallChange = a; }
+        private void SetScrollStep() { if(ushort.TryParse(TextBox_ScrollStep.Text, out ushort step)) VScrollBar_Main.SmallChange = step; }
 
         /// <summary>
         /// Метод обработки нажатой клавиши
         /// </summary>
-        private void TextBoxKeyDownReaction(object sender, KeyEventArgs e) {
-            switch (e.KeyCode) {
-                case Keys.Enter: {
+        private void TextBoxKeyDownReaction(object sender, KeyEventArgs e)
+        {
+            switch(e.KeyCode)
+            {
+                case Keys.Enter:
+                    {
                         enterHendler();
                         ActiveControl = null;
                         break;
                     }
-                case Keys.Back: {
+                case Keys.Back:
+                    {
                         BackspaseHandler(sender as TextBox);
                         break;
                     }
@@ -116,13 +161,16 @@ namespace Laba_1 {
         /// <summary>
         /// Метод стерания текста при помощи backspase
         /// </summary>
-        private void BackspaseHandler(TextBox textBox) {
+        private void BackspaseHandler(TextBox textBox)
+        {
             var selectionStart = textBox.SelectionStart;
-            if (textBox.SelectionLength > 0) {
+            if(textBox.SelectionLength > 0)
+            {
                 textBox.Text = textBox.Text.Substring(0, selectionStart) + textBox.Text.Substring(selectionStart + textBox.SelectionLength);
                 textBox.SelectionStart = selectionStart;
             }
-            else if (selectionStart > 0) {
+            else if(selectionStart > 0)
+            {
                 textBox.Text = textBox.Text.Substring(0, selectionStart - 1) + textBox.Text.Substring(selectionStart);
                 textBox.SelectionStart = selectionStart - 1;
             }
@@ -131,18 +179,20 @@ namespace Laba_1 {
         /// <summary>
         /// Событие перемещения мыши по экрану
         /// </summary>
-        private void PictureBox_MouseMove(object sender, MouseEventArgs e) {
-            if (pictureReader == null) return;
+        private void PictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            if(pictureReader == null) return;
             // Заполнение полей, связанных с положением мыши
             TextBox_XCoord.Text = $"{e.X}";
             TextBox_YCoord.Text = $"{topRow + e.Y}";
-            TextBox_Luminance.Text = $"{pictureReader.activePixels[e.Y, e.X]}";
+            TextBox_Luminance.Text = $"{pictureReader.PixelLuminance(e.Y + topRow, e.X)}";
         }
 
         /// <summary>
         /// Прокрутка изображения
         /// </summary>
-        private void VScrollBar_Scroll(object sender, ScrollEventArgs e) {
+        private void VScrollBar_Scroll(object sender, ScrollEventArgs e)
+        {
             // Изменение Y-координаты верхней строки экрана
             topRow = (ushort)e.NewValue;
             TextBox_TopRow.Text = $"{topRow}";
@@ -153,10 +203,12 @@ namespace Laba_1 {
         /// <summary>
         /// Построение изображения
         /// </summary>
-        private void ReadPicture() {
-            if (pictureReader != null) {
+        private void ReadPicture()
+        {
+            if(pictureReader != null)
+            {
                 // Получение матрицы изображения
-                picture = pictureReader.ReadPicture(topRow, (ushort)PictureBox.Height, bitShift);
+                picture = pictureReader.GetPicture(topRow, (ushort)PictureBox_Main.Height, bitShift);
                 // Отрисовка изображения
                 PaintPicture();
             }
@@ -165,56 +217,64 @@ namespace Laba_1 {
         /// <summary>
         /// События кнопок, отвечающих за битовый сдвиг
         /// </summary>
-        private void RadioButton_Shift0_CheckedChanged(object sender, EventArgs e) {
+        private void RadioButton_Shift0_CheckedChanged(object sender, EventArgs e)
+        {
             bitShift = 0;
-            ReuseByteShift();
+            ReadPicture();
         }
 
-        private void RadioButton_Shift1_CheckedChanged(object sender, EventArgs e) {
+        private void RadioButton_Shift1_CheckedChanged(object sender, EventArgs e)
+        {
             bitShift = 1;
-            ReuseByteShift();
+            ReadPicture();
         }
 
-        private void RadioButton_Shift2_CheckedChanged(object sender, EventArgs e) {
+        private void RadioButton_Shift2_CheckedChanged(object sender, EventArgs e)
+        {
             bitShift = 2;
-            ReuseByteShift();
-        }
-
-        /// <summary>
-        /// Перерисовывает изображение с новым сдвигом
-        /// </summary>
-        private void ReuseByteShift() {
-            if (picture != null) {
-                picture = pictureReader.ReuseBitShift(bitShift);
-                PaintPicture();
-            }
+            ReadPicture();
         }
 
         // Попиксельная отрисовка изображения
-        private void PaintPicture() {
+        private void PaintPicture()
+        {
             int width = picture.GetLength(1) > bitmap.Width ? bitmap.Width : picture.GetLength(1);
             // Заполняем bitmap
-            for (int row = 0; row < picture.GetLength(0); row++)
-                for (int col = 0; col < width; col++)
+            for(int row = 0; row < picture.GetLength(0); row++)
+                for(int col = 0; col < width; col++)
                     bitmap.SetPixel(col, row, Color.FromArgb(picture[row, col], picture[row, col], picture[row, col]));
             // Устанавлваем bitmap
-            PictureBox.Image = bitmap;
+            PictureBox_Main.Image = bitmap;
         }
 
         /// <summary>
         ///  Событие изменения размеров экрана
         /// </summary>
-        private void Form1_ResizeEnd(object sender, EventArgs e) {
+        private void Form1_ResizeEnd(object sender, EventArgs e)
+        {
             // Изменяем размеры bitmap
-            bitmap = new Bitmap(PictureBox.Width, PictureBox.Height);
+            bitmap = new Bitmap(PictureBox_Main.Width, PictureBox_Main.Height);
             // Изменяем размеры ползунка прокрутки изображения
-            VScrollBar.LargeChange = PictureBox.Size.Height;
+            VScrollBar_Main.LargeChange = PictureBox_Main.Height;
+            // Проверяем актуальность, не стало ли строк кэша меньше, чем строк изображения
+            UpdateCacheRowsCount();
 
-            if (pictureReader == null) return;
-            if (topRow + PictureBox.Height > pictureReader.Height)
-                topRow = (ushort)(pictureReader.Height - PictureBox.Height);
+            if(pictureReader == null) return;
+            if(topRow + PictureBox_Main.Height > pictureReader.Height)
+                topRow = (ushort)(pictureReader.Height - PictureBox_Main.Height);
             // Строим изображение
             ReadPicture();
+        }
+
+        /// <summary>
+        /// Смешной кастыль, но я хз...
+        /// Просто,ну, нету события фуллскрина....
+        /// Дебилизм....
+        /// </summary>
+        private void Form1_Resize(object sender, EventArgs e)
+        {
+            if(this.WindowState == FormWindowState.Maximized)
+                Form1_ResizeEnd(sender, e);
         }
     }
 }

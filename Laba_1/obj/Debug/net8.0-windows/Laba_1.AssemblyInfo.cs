@@ -11,12 +11,12 @@
 using System;
 using System.Reflection;
 
-[assembly: System.Reflection.AssemblyCompanyAttribute("ПООВД_3_ИАИТ-119_ЛР№1_Иванчин")]
+[assembly: System.Reflection.AssemblyCompanyAttribute("ПООВД_3_ИАИТ-119_ЛР№1_Иванчин_Гаврилов")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
-[assembly: System.Reflection.AssemblyProductAttribute("ПООВД_3_ИАИТ-119_ЛР№1_Иванчин")]
-[assembly: System.Reflection.AssemblyTitleAttribute("ПООВД_3_ИАИТ-119_ЛР№1_Иванчин")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+342b79636a18f6792683df7e61aa48c4bfb71548")]
+[assembly: System.Reflection.AssemblyProductAttribute("ПООВД_3_ИАИТ-119_ЛР№1_Иванчин_Гаврилов")]
+[assembly: System.Reflection.AssemblyTitleAttribute("ПООВД_3_ИАИТ-119_ЛР№1_Иванчин_Гаврилов")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
 [assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]

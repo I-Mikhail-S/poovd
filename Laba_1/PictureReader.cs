@@ -3,56 +3,117 @@
         // Путь до файла
         public string Path { get; private set; }
         // Штрина изображения
-        public ushort Width { get; private set; }
+        public int Width { get; private set; }
         // Длинна изображения
-        public ushort Height { get; private set; }
-        // Пиксели экрана в 2-байтовом виде (изображение)
-        public ushort[,] activePixels { get; private set; }
+        public int Height { get; private set; }
+        // Считанная часть изображения в 2-байтовом виде (кэш)
+        public ushort[,] CachePixels { get; private set; }
         // Y-координата верхней строки экрана при последней отрисовке
-        private ushort lastTopRow;
-        // Поток файла
+        private ushort cacheTopRow = 0;
+        // Кол-во строк, сохраняемых в кэш
+        private ushort cacheRowsCount;
+        // Тип файла(в тестовом ширина и высота 2 байта, в фулл 4 байта)
+        private readonly bool testVersion;
+        // Поток работы с файлом
         private FileStream fstream;
 
         /// <summary>
         /// Сразу считывает информацию о изображении
         /// </summary>
         /// <param name="path">Путь к файлу</param>
-        public PictureReader(string path) {
+        public PictureReader(string path, ushort cacheRowsCount, bool testVersion) {
             Path = path;
+            this.cacheRowsCount = cacheRowsCount;
+            this.testVersion = testVersion;
             ReadInformation();
+            CreateCache();
         }
 
         /// <summary>
-        /// Считывает изображение с файла, по возможности часть копирует с прошлой изображения
+        /// Выдаёт матрицу яркости пикселей избражения с данным битовым сдвигом в байт формате
         /// </summary>
         /// <param name="topRow">Y-координата верхней строки экрана</param>
         /// <param name="rowsCount">Количество строк</param>
         /// <param name="bitShift">Битовый сдвиг</param>
         /// <returns>Матрица яркости пикселей</returns>
-        public byte[,] ReadPicture(ushort topRow, ushort rowsCount, byte bitShift) {
-            //Проверяем наличие старого изображения
-            if (activePixels != null) {
-                //Пытаемся скопировать часть старого изображения и докачать остаток
-                activePixels = TryCopyAndRead(topRow, rowsCount);
-            }
-            else {
-                // Создаём новое изображение
-                activePixels = new ushort[rowsCount, Width];
-                ReadPixelsInformation(activePixels, topRow, rowsCount);
-            }
-            // Сохраняем Y-координату верхней строки экрана
-            lastTopRow = topRow;
+        public byte[,] GetPicture(ushort topRow, ushort rowsCount, byte bitShift) {
+            // Если изображение есть в кэше, просто выдаём его в byte со сдвигом
+            if(InCache(topRow, rowsCount))
+                return ConvertPictureToByte(topRow, rowsCount, bitShift);
+            MessageBox.Show("Подгрузка");
+            // Обновляем кэшированную часть изображения
+            ushort newCacheTopRow = CalcTopRow((ushort)(topRow + rowsCount / 2));
+            CachePixels = TryCopyAndRead(newCacheTopRow, cacheRowsCount);
+            // Сохраняем Y-координату верхней строки кешированной части изображения
+            cacheTopRow = newCacheTopRow;
             // Возврщаем конвертированное в byte со сдвигом изображение
-            return ConvertPictureToByte(bitShift);
+            return ConvertPictureToByte(topRow, rowsCount, bitShift);
         }
 
         /// <summary>
-        /// Возвращает изображение на экране с другим битовым сдвигом
+        /// Метод изменения кол-ва строк, сохраняемых в кэше
         /// </summary>
-        /// <param name="bitShift">Битовый сдвиг</param>
-        /// <returns>Матрица яркости пикселей в формате byte</returns>
-        public byte[,] ReuseBitShift(byte bitShift) {
-            return ConvertPictureToByte(bitShift);
+        /// <param name="newCount">Новое кол-во строк</param>
+        public void UpdateCacheRowsCount(ushort newCount)
+        {
+            cacheRowsCount = newCount;
+            if(cacheTopRow + cacheRowsCount < Height)
+                CachePixels = TryCopyAndRead(cacheTopRow, cacheRowsCount);
+            else
+                CachePixels = TryCopyAndRead((ushort)(Height - cacheRowsCount), cacheRowsCount);
+        }
+
+        /// <summary>
+        /// Яркость пикселя по координатам
+        /// </summary>
+        /// <param name="row">Строка(Y)</param>
+        /// <param name="col">Столбец(Х)</param>
+        /// <returns></returns>
+        public ushort PixelLuminance(int row, int col)
+        {
+            return CachePixels[row - cacheTopRow, col];
+        }
+
+        /// <summary>
+        /// Загружает верхнюю часть изображения в кэш
+        /// </summary>
+        private void CreateCache()
+        {
+            // Создаём новое изображение
+            CachePixels = new ushort[cacheRowsCount, Width];
+            ReadPixelsInformation(CachePixels, 0, cacheRowsCount);
+        }
+
+        /// <summary>
+        /// Сохранены ли запрашиваемые строки в кэше
+        /// </summary>
+        /// <param name="topRow">Y-координата верхней строки экрана</param>
+        /// <param name="rowsCount">Количество строк</param>
+        private bool InCache(ushort topRow, ushort rowsCount)
+        {
+            return cacheTopRow <= topRow 
+                && cacheTopRow + cacheRowsCount >= topRow + rowsCount;
+        }
+
+        /// <summary>
+        /// Считает Y-координату строки, 
+        /// с которой нужно сохранить часть изображения в кэш
+        /// </summary>
+        /// <param name="centralRow"> Центральная строка изображения</param>
+        /// <returns>Y-координата строки, 
+        /// с которой нужно сохранить часть изображения в кэш</returns>
+        private ushort CalcTopRow(ushort centralRow)
+        {
+            // Определение, с какой строки изображения сохранить кэш
+            ushort topRow;
+            ushort delta = (ushort)(cacheRowsCount / 2);
+            if(centralRow - delta < 0)
+                topRow = 0;
+            else if(centralRow + delta > Height)
+                topRow = (ushort)(Height - cacheRowsCount);
+            else
+                topRow = (ushort)(centralRow - delta);
+            return topRow;
         }
 
         /// <summary>
@@ -60,13 +121,15 @@
         /// </summary>
         /// <param name="bitShift">Битовый сдвиг</param>
         /// <returns>Матрица яркости пикселей в формате byte</returns>
-        private byte[,] ConvertPictureToByte(byte bitShift) {
+        private byte[,] ConvertPictureToByte(ushort topRow, ushort rowsCount, byte bitShift) {
             // Создаём матрицу
-            byte[,] pixels = new byte[activePixels.GetLength(0), Width];
+            byte[,] pixels = new byte[rowsCount, Width];
+
+            int delta = topRow - cacheTopRow;
             // Заполняем
-            for (int row = 0; row < pixels.GetLength(0); row++)
+            for (int row = delta; row < delta + rowsCount; row++)
                 for (int column = 0; column < Width; column++)
-                    pixels[row, column] = (byte)(activePixels[row, column] >> bitShift);
+                    pixels[row - delta, column] = (byte)(CachePixels[row, column] >> bitShift);
             return pixels;
         }
 
@@ -78,58 +141,58 @@
         /// <returns>Матрица изображения в формате ushort</returns>
         private ushort[,] TryCopyAndRead(ushort topRow, ushort rowsCount) {
             // Создаём новую матрицу
-            ushort[,] newActivePixels = new ushort[rowsCount, Width];
+            ushort[,] newCachePixels = new ushort[rowsCount, Width];
             // Если верхняя строка нового изображения не выше верхней строки нынешнего
             // и часть нового изображения захватывает старое
-            if (topRow >= lastTopRow && rowsCount - (topRow - lastTopRow) > 0) {
+            if (topRow >= cacheTopRow && rowsCount - (topRow - cacheTopRow) > 0) {
                 // Определяем, сколько строк можно скопировать
-                ushort rowsCountToCopy = rowsCount > activePixels.GetLength(0) ? (ushort)activePixels.GetLength(0) : rowsCount;
+                ushort rowsCountToCopy = rowsCount > CachePixels.GetLength(0) ? (ushort)CachePixels.GetLength(0) : rowsCount;
                 // Копируем
-                for (int row = topRow - lastTopRow; row < rowsCountToCopy; row++)
+                for (int row = topRow - cacheTopRow; row < rowsCountToCopy; row++)
                     for (int column = 0; column < Width; column++)
-                        newActivePixels[row - (topRow - lastTopRow), column] = activePixels[row, column];
+                        newCachePixels[row - (topRow - cacheTopRow), column] = CachePixels[row, column];
                 // Определяем строку, с которой нужно дозаполнить матрицу
-                int lastIndex = rowsCountToCopy - (topRow - lastTopRow) - 1;
+                int lastIndex = rowsCountToCopy - (topRow - cacheTopRow) - 1;
                 // Дозаполняем матрицу
-                ReadPixelsInformation(newActivePixels, topRow + lastIndex, rowsCount - lastIndex, lastIndex);
+                ReadPixelsInformation(newCachePixels, topRow + lastIndex, rowsCount - lastIndex, lastIndex);
             }
             // Если верхняя строка нового изображения выше верхней строки нынешнего
             // и часть нового изображения захватывает старое
-            else if (topRow < lastTopRow && rowsCount - (lastTopRow - topRow) > 0) {
+            else if (topRow < cacheTopRow && rowsCount - (cacheTopRow - topRow) > 0) {
                 // Копируем
-                for (int row = lastTopRow - topRow; row < rowsCount; row++)
+                for (int row = cacheTopRow - topRow; row < rowsCount; row++)
                     for (int column = 0; column < Width; column++)
-                        newActivePixels[row, column] = activePixels[row - (lastTopRow - topRow), column];
+                        newCachePixels[row, column] = CachePixels[row - (cacheTopRow - topRow), column];
                 // Дозаполняем матрицу
-                ReadPixelsInformation(newActivePixels, topRow, lastTopRow - topRow);
+                ReadPixelsInformation(newCachePixels, topRow, cacheTopRow - topRow);
             }
             // Если новая матрица не пересекается со старой
             else {
                 // Считываем всю матрицу из файла
-                ReadPixelsInformation(newActivePixels, topRow, rowsCount);
+                ReadPixelsInformation(newCachePixels, topRow, rowsCount);
             }
-            return newActivePixels;
+            return newCachePixels;
         }
 
         /// <summary>
         /// Считывает информацию из файла и заносит в матрицу
         /// </summary>
-        /// <param name="newActivePixels">Матрица, в которую нужно внести изменения</param>
+        /// <param name="newCachePixels">Матрица, в которую нужно внести изменения</param>
         /// <param name="topRow">Y-координата верхней строки экрана</param>
         /// <param name="rowsCount">Количестро строк</param>
         /// <param name="startIndex">Строка матрицы, с которой нужно начать заполнение(standart = 0)</param>
-        private void ReadPixelsInformation(ushort[,] newActivePixels, int topRow, int rowsCount, int startIndex = 0) {
+        private void ReadPixelsInformation(ushort[,] newCachePixels, int topRow, int rowsCount, int startIndex = 0) {
             // Создаём массив для считывания из файла
             byte[] bytesCode = new byte[rowsCount * Width * 2];
             // Считываем файл
             using (fstream = File.OpenRead(Path)) {
-                fstream.Position = 4 + topRow * Width * 2;
+                fstream.Position = (testVersion ? 4 : 8) + topRow * Width * 2;
                 fstream.Read(bytesCode, 0, rowsCount * Width * 2);
             }
             // Преобразуем полученные данные в ushort и заносим в матрицу
             for (int row = 0; row < rowsCount; row++) {
                 for (int col = 0; col < Width; col++) {
-                    newActivePixels[startIndex + row, col] = BitConverter.ToUInt16(bytesCode, (row * Width + col) * 2);
+                    newCachePixels[startIndex + row, col] = BitConverter.ToUInt16(bytesCode, (row * Width + col) * 2);
                 }
             }
         }
@@ -138,12 +201,22 @@
         /// Считывает из файла размеры изображения
         /// </summary>
         private void ReadInformation() {
-            byte[] bytesOfNumber = new byte[2];
+            byte[] bytesOfNumber = new byte[4];
             using (fstream = File.OpenRead(Path)) {
-                fstream.Read(bytesOfNumber, 0, 2);
-                Width = BitConverter.ToUInt16(bytesOfNumber, 0);
-                fstream.Read(bytesOfNumber, 0, 2);
-                Height = BitConverter.ToUInt16(bytesOfNumber, 0);
+                if (testVersion)
+                {
+                    fstream.Read(bytesOfNumber, 0, 2);
+                    Width = BitConverter.ToUInt16(bytesOfNumber, 0);
+                    fstream.Read(bytesOfNumber, 0, 2);
+                    Height = BitConverter.ToUInt16(bytesOfNumber, 0);
+                }
+                else
+                {
+                    fstream.Read(bytesOfNumber, 0, 4);
+                    Width = BitConverter.ToInt32(bytesOfNumber, 0);
+                    fstream.Read(bytesOfNumber, 0, 4);
+                    Height = BitConverter.ToInt32(bytesOfNumber, 0);
+                }
             }
         }
     }
