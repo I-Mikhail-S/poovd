@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\VisualDataProcessing\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{153C120B-21A8-4365-9121-BFFA70311EAC}|Laba_1\\Laba_1.csproj|c:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\visualdataprocessing\\laba_1\\picturereader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{153C120B-21A8-4365-9121-BFFA70311EAC}|Laba_1\\Laba_1.csproj|solutionrelative:laba_1\\picturereader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{153C120B-21A8-4365-9121-BFFA70311EAC}|Laba_1\\Laba_1.csproj|c:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\visualdataprocessing\\laba_1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{153C120B-21A8-4365-9121-BFFA70311EAC}|Laba_1\\Laba_1.csproj|solutionrelative:laba_1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{153C120B-21A8-4365-9121-BFFA70311EAC}|Laba_1\\Laba_1.csproj|C:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\VisualDataProcessing\\laba_1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
       "RelativeMoniker": "D:0:0:{153C120B-21A8-4365-9121-BFFA70311EAC}|Laba_1\\Laba_1.csproj|solutionrelative:laba_1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{153C120B-21A8-4365-9121-BFFA70311EAC}|Laba_1\\Laba_1.csproj|c:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u043F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\visualdataprocessing\\laba_1\\picturereader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{153C120B-21A8-4365-9121-BFFA70311EAC}|Laba_1\\Laba_1.csproj|solutionrelative:laba_1\\picturereader.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -21,43 +21,43 @@
       "VerticalTabListWidth": 256,
       "DocumentGroups": [
         {
-          "DockedHeight": 336,
-          "SelectedChildIndex": 2,
+          "DockedHeight": 389,
+          "SelectedChildIndex": 1,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "Form1.cs [Design]",
+              "DocumentIndex": 1,
+              "Title": "Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
               "DocumentMoniker": "C:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\VisualDataProcessing\\Laba_1\\Form1.cs",
               "RelativeDocumentMoniker": "Laba_1\\Form1.cs",
-              "ToolTip": "C:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\VisualDataProcessing\\Laba_1\\Form1.cs [Design]",
-              "RelativeToolTip": "Laba_1\\Form1.cs [Design]",
+              "ToolTip": "C:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\VisualDataProcessing\\Laba_1\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
+              "RelativeToolTip": "Laba_1\\Form1.cs [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-30T17:35:28.472Z",
-              "EditorCaption": " [Design]"
+              "EditorCaption": " [\u041A\u043E\u043D\u0441\u0442\u0440\u0443\u0438\u0440\u043E\u0432\u0430\u043D\u0438\u0435]"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 0,
               "Title": "Form1.cs",
               "DocumentMoniker": "C:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\VisualDataProcessing\\Laba_1\\Form1.cs",
               "RelativeDocumentMoniker": "Laba_1\\Form1.cs",
               "ToolTip": "C:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\VisualDataProcessing\\Laba_1\\Form1.cs",
               "RelativeToolTip": "Laba_1\\Form1.cs",
-              "ViewState": "AgIAAK4AAAAAAAAAAAAAALsAAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAL0AAAAAAAAAAAA1wM4AAAAMAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T09:58:29.913Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 2,
               "Title": "PictureReader.cs",
               "DocumentMoniker": "C:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\VisualDataProcessing\\Laba_1\\PictureReader.cs",
               "RelativeDocumentMoniker": "Laba_1\\PictureReader.cs",
               "ToolTip": "C:\\\u0438\u043D\u0441\u0442\\5 \u0441\u0435\u043C\u0430\u043A\\\u041F\u0440\u043E\u0433\u0440\u0430\u043C\u043C\u043D\u043E\u0435 \u043E\u0431\u0435\u0441\u043F\u0435\u0447\u0435\u043D\u0438\u0435 \u043E\u0431\u0440\u0430\u0431\u043E\u0442\u043A\u0438 \u0432\u0438\u0437\u0443\u0430\u043B\u044C\u043D\u044B\u0445 \u0434\u0430\u043D\u043D\u044B\u0445\\VisualDataProcessing\\Laba_1\\PictureReader.cs",
               "RelativeToolTip": "Laba_1\\PictureReader.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAF8AAAAAAAAAAAAAALAAAABmAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-09-27T09:58:20.319Z",
               "EditorCaption": ""
@@ -65,7 +65,7 @@
           ]
         },
         {
-          "DockedHeight": 96,
+          "DockedHeight": 43,
           "SelectedChildIndex": -1,
           "Children": [
             {

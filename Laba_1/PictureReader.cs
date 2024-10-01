@@ -34,12 +34,17 @@
         /// </summary>
         /// <param name="topRow">Y-координата верхней строки экрана</param>
         /// <param name="rowsCount">Количество строк</param>
+        /// <param name="leftCol">X-координата левой колонки экрана</param>
+        /// <param name="colCount">ширина изображения</param>
         /// <param name="bitShift">Битовый сдвиг</param>
         /// <returns>Матрица яркости пикселей</returns>
-        public byte[,] GetPicture(ushort topRow, ushort rowsCount, byte bitShift) {
+        public byte[,] GetPicture(ushort topRow, ushort rowsCount, ushort leftCol, ushort colCount, byte bitShift) {
+            // Проверка валидности ширины запрашиваемого изображения
+            if(leftCol + colCount > Width)
+                colCount = (ushort)(Width - leftCol);
             // Если изображение есть в кэше, просто выдаём его в byte со сдвигом
             if(InCache(topRow, rowsCount))
-                return ConvertPictureToByte(topRow, rowsCount, bitShift);
+                return ConvertPictureToByte(topRow, rowsCount, leftCol, colCount, bitShift);
             MessageBox.Show("Подгрузка");
             // Обновляем кэшированную часть изображения
             ushort newCacheTopRow = CalcTopRow((ushort)(topRow + rowsCount / 2));
@@ -47,7 +52,7 @@
             // Сохраняем Y-координату верхней строки кешированной части изображения
             cacheTopRow = newCacheTopRow;
             // Возврщаем конвертированное в byte со сдвигом изображение
-            return ConvertPictureToByte(topRow, rowsCount, bitShift);
+            return ConvertPictureToByte(topRow, rowsCount, leftCol, colCount, bitShift);
         }
 
         /// <summary>
@@ -121,15 +126,15 @@
         /// </summary>
         /// <param name="bitShift">Битовый сдвиг</param>
         /// <returns>Матрица яркости пикселей в формате byte</returns>
-        private byte[,] ConvertPictureToByte(ushort topRow, ushort rowsCount, byte bitShift) {
+        private byte[,] ConvertPictureToByte(ushort topRow, ushort rowsCount, ushort leftCol, ushort colCount, byte bitShift) {
             // Создаём матрицу
-            byte[,] pixels = new byte[rowsCount, Width];
+            byte[,] pixels = new byte[rowsCount, colCount];
 
             int delta = topRow - cacheTopRow;
             // Заполняем
             for (int row = delta; row < delta + rowsCount; row++)
-                for (int column = 0; column < Width; column++)
-                    pixels[row - delta, column] = (byte)(CachePixels[row, column] >> bitShift);
+                for (int column = leftCol; column < leftCol + colCount; column++)
+                    pixels[row - delta, column - leftCol] = (byte)(CachePixels[row, column] >> bitShift);
             return pixels;
         }
 
@@ -159,10 +164,17 @@
             // Если верхняя строка нового изображения выше верхней строки нынешнего
             // и часть нового изображения захватывает старое
             else if (topRow < cacheTopRow && rowsCount - (cacheTopRow - topRow) > 0) {
+                ushort lastRow = (ushort)(topRow + rowsCount);
+                ushort lastCacheRow = (ushort)(cacheTopRow + cacheRowsCount);
+                ushort lastCopyRow = lastRow > lastCacheRow ? lastCacheRow : lastRow;
+                // Ситуация, когда изображение расширилось в обе стороны
+                if(lastRow > lastCacheRow)
+                    ReadPixelsInformation(newCachePixels, lastCacheRow, 
+                        lastRow - lastCacheRow, lastCacheRow - topRow);
                 // Копируем
-                for (int row = cacheTopRow - topRow; row < rowsCount; row++)
+                for (int row = cacheTopRow; row < lastCopyRow; row++)
                     for (int column = 0; column < Width; column++)
-                        newCachePixels[row, column] = CachePixels[row - (cacheTopRow - topRow), column];
+                        newCachePixels[row - topRow, column] = CachePixels[row - cacheTopRow, column];
                 // Дозаполняем матрицу
                 ReadPixelsInformation(newCachePixels, topRow, cacheTopRow - topRow);
             }

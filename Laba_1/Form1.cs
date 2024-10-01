@@ -24,7 +24,8 @@ namespace Laba_1 {
             InitializeComponent();
             PictureBox_Main.BackColor = Color.White;
             bitmap = new Bitmap(PictureBox_Main.Width, PictureBox_Main.Height);
-            VScrollBar_Main.LargeChange = PictureBox_Main.Size.Height;
+            VScrollBar_Main.LargeChange = PictureBox_Main.Height;
+            HScrollBar_Main.LargeChange = PictureBox_Main.Width;
             UpdateCacheRowsCount();
         }
 
@@ -56,16 +57,14 @@ namespace Laba_1 {
                 // Создаём объект PictureReader 
                 pictureReader = new(openFileDialog.FileName,
                     ushort.Parse(TextBox_CacheRowsCount.Text), CheckBox_TestVersion.Checked);
-                // Обновляем ширину изображения
-                PictureBox_Main.Width = pictureReader.Width;
-                bitmap = new Bitmap(PictureBox_Main.Width, PictureBox_Main.Height);
-                // Уставанливаем макс значение равное размерам изображения и значение на 0
+                // Уставанливаем макс значения скролбаров
                 VScrollBar_Main.Maximum = pictureReader.Height - 1;
+                HScrollBar_Main.Maximum = pictureReader.Width - 1;
                 // Выводим название файла
                 Label_FileName.Text = openFileDialog.
                     FileName[(openFileDialog.FileName.LastIndexOf('\\') + 1)..];
                 // Выводим инфу о изображении
-                TextBox_ImageSize.Text = $"{pictureReader.Width}Х{pictureReader.Height}";
+                TextBox_ImageSize.Text = $"{pictureReader.Width}х{pictureReader.Height}";
                 // Выводим изображение на экран
                 ReadPicture();
             }
@@ -109,8 +108,12 @@ namespace Laba_1 {
         /// </summary>
         private void UpdateCacheRowsCount()
         {
+            ushort newCount;
+            // Если пустая строка, то считаем нулём
+            if(TextBox_CacheRowsCount.Text == "")
+                newCount = 0;
             // Проверяем валидность данных
-            if(!ushort.TryParse(TextBox_CacheRowsCount.Text, out ushort newCount)) return;
+            else if(!ushort.TryParse(TextBox_CacheRowsCount.Text, out newCount)) return;
             // Если меньше экрана, ставимпоразмерам экрана
             if(newCount < PictureBox_Main.Height)
                 newCount = (ushort)PictureBox_Main.Height;
@@ -135,7 +138,12 @@ namespace Laba_1 {
         /// <summary>
         /// Метод обработки шага прокрутки изображения
         /// </summary>
-        private void SetScrollStep() { if(ushort.TryParse(TextBox_ScrollStep.Text, out ushort step)) VScrollBar_Main.SmallChange = step; }
+        private void SetScrollStep()
+        {
+            if(!ushort.TryParse(TextBox_ScrollStep.Text, out ushort step)) return;
+            HScrollBar_Main.SmallChange = step;
+            VScrollBar_Main.SmallChange = step;
+        }
 
         /// <summary>
         /// Метод обработки нажатой клавиши
@@ -185,17 +193,29 @@ namespace Laba_1 {
             // Заполнение полей, связанных с положением мыши
             TextBox_XCoord.Text = $"{e.X}";
             TextBox_YCoord.Text = $"{topRow + e.Y}";
-            TextBox_Luminance.Text = $"{pictureReader.PixelLuminance(e.Y + topRow, e.X)}";
+            if(e.X < pictureReader.Width)
+                TextBox_Luminance.Text = $"{pictureReader.PixelLuminance(e.Y + topRow, e.X)}";
+            else
+                TextBox_Luminance.Text = "0";
         }
 
         /// <summary>
-        /// Прокрутка изображения
+        /// Вертикальная прокрутка изображения
         /// </summary>
         private void VScrollBar_Scroll(object sender, ScrollEventArgs e)
         {
             // Изменение Y-координаты верхней строки экрана
             topRow = (ushort)e.NewValue;
             TextBox_TopRow.Text = $"{topRow}";
+            // Отрисовка изображения
+            ReadPicture();
+        }
+
+        /// <summary>
+        /// Горизонтальная прокрутка изображения
+        /// </summary>
+        private void HScrollBar_Main_Scroll(object sender, ScrollEventArgs e)
+        {
             // Отрисовка изображения
             ReadPicture();
         }
@@ -208,7 +228,8 @@ namespace Laba_1 {
             if(pictureReader != null)
             {
                 // Получение матрицы изображения
-                picture = pictureReader.GetPicture(topRow, (ushort)PictureBox_Main.Height, bitShift);
+                picture = pictureReader.GetPicture(topRow, (ushort)PictureBox_Main.Height,
+                    (ushort)HScrollBar_Main.Value, (ushort)PictureBox_Main.Width, bitShift);
                 // Отрисовка изображения
                 PaintPicture();
             }
@@ -256,6 +277,7 @@ namespace Laba_1 {
             bitmap = new Bitmap(PictureBox_Main.Width, PictureBox_Main.Height);
             // Изменяем размеры ползунка прокрутки изображения
             VScrollBar_Main.LargeChange = PictureBox_Main.Height;
+            HScrollBar_Main.LargeChange = PictureBox_Main.Width;
             // Проверяем актуальность, не стало ли строк кэша меньше, чем строк изображения
             UpdateCacheRowsCount();
 

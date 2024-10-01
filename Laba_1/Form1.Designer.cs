@@ -52,6 +52,7 @@
             label4 = new Label();
             groupBox5 = new GroupBox();
             TextBox_CacheRowsCount = new TextBox();
+            HScrollBar_Main = new HScrollBar();
             groupBox1.SuspendLayout();
             groupBox2.SuspendLayout();
             groupBox4.SuspendLayout();
@@ -162,10 +163,10 @@
             // 
             // PictureBox_Main
             // 
-            PictureBox_Main.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left;
+            PictureBox_Main.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             PictureBox_Main.Location = new Point(11, 75);
             PictureBox_Main.Name = "PictureBox_Main";
-            PictureBox_Main.Size = new Size(580, 464);
+            PictureBox_Main.Size = new Size(580, 440);
             PictureBox_Main.TabIndex = 7;
             PictureBox_Main.TabStop = false;
             PictureBox_Main.MouseMove += PictureBox_MouseMove;
@@ -276,7 +277,7 @@
             TextBox_ImageSize.Margin = new Padding(3, 4, 3, 4);
             TextBox_ImageSize.Name = "TextBox_ImageSize";
             TextBox_ImageSize.ReadOnly = true;
-            TextBox_ImageSize.Size = new Size(249, 27);
+            TextBox_ImageSize.Size = new Size(146, 27);
             TextBox_ImageSize.TabIndex = 14;
             // 
             // label4
@@ -310,11 +311,22 @@
             TextBox_CacheRowsCount.KeyDown += TextBox_CacheRowsCount_KeyDown;
             TextBox_CacheRowsCount.KeyPress += TextBox_OnlyNumbersInput;
             // 
+            // HScrollBar_Main
+            // 
+            HScrollBar_Main.Anchor = AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            HScrollBar_Main.Location = new Point(11, 518);
+            HScrollBar_Main.Maximum = 500;
+            HScrollBar_Main.Name = "HScrollBar_Main";
+            HScrollBar_Main.Size = new Size(580, 26);
+            HScrollBar_Main.TabIndex = 17;
+            HScrollBar_Main.Scroll += HScrollBar_Main_Scroll;
+            // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1002, 585);
+            Controls.Add(HScrollBar_Main);
             Controls.Add(groupBox5);
             Controls.Add(label4);
             Controls.Add(groupBox3);
@@ -330,7 +342,7 @@
             Controls.Add(groupBox2);
             Controls.Add(groupBox1);
             Controls.Add(VScrollBar_Main);
-            MinimumSize = new Size(884, 498);
+            MinimumSize = new Size(1020, 632);
             Name = "Form1";
             Text = "Визуализация изображений высокого разрешения";
             ResizeEnd += Form1_ResizeEnd;
@@ -376,5 +388,6 @@
         private Label label4;
         private GroupBox groupBox5;
         private TextBox TextBox_CacheRowsCount;
+        private HScrollBar HScrollBar_Main;
     }
 }
